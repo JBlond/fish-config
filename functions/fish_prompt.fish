@@ -56,7 +56,7 @@ function fish_prompt
   end
 
   echo -n -s $status_indicator 
-  echo (whoami)@(hostname) $cwd $git_info $normal ' '
+  echo (whoami) $cwd $git_info $normal ' '
   # echo # To print an empty line
   # prompt character
   set_color ff0000
