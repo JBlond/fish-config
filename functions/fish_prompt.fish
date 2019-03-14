@@ -1,65 +1,50 @@
-#-----------------------------------------------------------------------
-function fish_prompt --description 'Write out the prompt'
-    set -l last_status $status
-    set -l bg_color 000000
+# name: modified eclm
+function _git_branch_name
+  echo (command git symbolic-ref HEAD ^/dev/null | sed -e 's|^refs/heads/||')
+end
 
-    #-------------------------------------------------------------------
-    if not test $last_status -eq 0
-        set right_prompt_fg_color red
+function _is_git_dirty
+  echo (command git status -s --ignore-submodules=dirty ^/dev/null)
+end
+
+function fish_prompt
+  set -l last_status $status
+  set -l cyan (set_color -o cyan)
+  set -l yellow (set_color -o yellow)
+  set -l red (set_color -o red)
+  set -l blue (set_color -o blue)
+  set -l green (set_color -o green)
+  set -l normal (set_color normal)
+
+  if test $last_status = 0
+      set status_indicator "$green✔︎ "
+  else
+      set status_indicator "$red✗ "
+  end
+  set -l cwd $cyan(basename (prompt_pwd))
+  
+  set -l branch_name (_git_branch_name)
+  #echo 'branch name is ' + $branch_name
+  if [ $branch_name ]
+
+    if test $branch_name = 'master'
+      set -l git_branch "master"
+      set git_info "$normal ($red$git_branch$normal)"
     else
-        set right_prompt_fg_color 94bac5
+      set -l git_branch $branch_name
+      set git_info "$normal ($blue$git_branch$normal)"
     end
 
-    #-------------------------------------------------------------------
-    if not set -q __fish_prompt_char
-        switch (id -u)
-            case 0
-                set __fish_prompt_char '⚡⚡ '
-            case '*'
-            set __fish_prompt_char 'λ '
-        end
+    if [ (_is_git_dirty) ]
+      set -l dirty "$yellow ✗"
+      set git_info "$git_info$dirty"
     end
+  end
 
-    #-------------------------------------------------------------------
-    # user
-    set -l left_prompt (echo_color -b $bg_color -o 00ffff (whoami))
+  # Notify if a command took more than 1 minutes
+  if [ "$CMD_DURATION" -gt 60000 ]
+    echo The last command took (math "$CMD_DURATION/1000") seconds.
+  end
 
-    # at sign
-    _append left_prompt (echo_color -b $bg_color 77ee00 '@')
-
-    # host
-    # set __fish_prompt_hostname (hostname|cut -d . -f 1)
-    _append left_prompt (echo_color -b $bg_color -o 77ee00 (hostname))
-
-    # colon
-    _append left_prompt (echo_color -b $bg_color -o cccccc ':')
-
-    # working directory (toggle b/t implementations, if needed)
-    # _append left_prompt (echo_color -b $bg_color -o aaff7f (prompt_pwd))
-    #
-    _append left_prompt (echo_color -b $bg_color -o 0000FF (echo $PWD | sed -e "s|^$HOME|~|"))
-
-
-    # right prompt
-    set -l right_prompt (echo '')
-
-    # spaces
-    #set -l left_length (visual_length $left_prompt)
-    #set -l right_length (visual_length $right_prompt)
-    # set -l spaces (math "$COLUMNS - $left_length - $right_length")
-
-    #-------------------------------------------------------------------
-    # display first line
-    echo  # blank line
-    echo -n $left_prompt
-    echo -n $git_prompt
-    set_color -b $bg_color
-    printf "%-"$spaces"s" " "
-    echo $right_prompt
-
-    # prompt character
-    set_color -b $bg_color -o ff0000
-    echo -n $__fish_prompt_char
-    set_color normal
-    echo -n " "
+  echo -n -s $status_indicator $cwd $git_info $normal ' '
 end
