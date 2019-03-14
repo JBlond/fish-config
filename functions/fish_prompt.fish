@@ -55,7 +55,8 @@ function fish_prompt
     echo The last command took (math "$CMD_DURATION/1000") seconds.
   end
 
-  echo -n -s $status_indicator $cwd $git_info $normal ' '
+  echo -n -s $status_indicator 
+  echo (whoami) $cwd $git_info $normal ' '
   echo # To print an empty line
   # prompt character
   set_color ff0000
