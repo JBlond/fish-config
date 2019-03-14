@@ -56,9 +56,10 @@ function fish_prompt
   end
 
   echo -n -s $status_indicator $cwd $git_info $normal ' '
+  echo # To print an empty line
   # prompt character
-  set_color -b $bg_color -o ff0000
+  set_color ff0000
   echo -n $__fish_prompt_char
   set_color normal
-  echo -n " "
+
 end
