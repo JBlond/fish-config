@@ -15,13 +15,22 @@ function fish_prompt
   set -l blue (set_color -o blue)
   set -l green (set_color -o green)
   set -l normal (set_color normal)
+  
+  if not set -q __fish_prompt_char
+        switch (id -u)
+            case 0
+                set __fish_prompt_char '⚡⚡ '
+            case '*'
+            set __fish_prompt_char 'λ '
+        end
+    end
 
   if test $last_status = 0
       set status_indicator "$green✔︎ "
   else
       set status_indicator "$red✗ "
   end
-  set -l cwd $cyan(basename (prompt_pwd))
+  set -l cwd $cyan(prompt_pwd)
   
   set -l branch_name (_git_branch_name)
   #echo 'branch name is ' + $branch_name
@@ -47,4 +56,9 @@ function fish_prompt
   end
 
   echo -n -s $status_indicator $cwd $git_info $normal ' '
+  # prompt character
+  set_color -b $bg_color -o ff0000
+  echo -n $__fish_prompt_char
+  set_color normal
+  echo -n " "
 end
