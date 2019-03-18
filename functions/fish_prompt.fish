@@ -26,7 +26,7 @@ function fish_prompt
     end
 
   if test $last_status = 0
-      set status_indicator "$green✔︎ "
+      set status_indicator "$green✓ "
   else
       set status_indicator "$red✗ "
   end
