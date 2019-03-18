@@ -57,7 +57,7 @@ function fish_prompt
 
   echo -n -s $status_indicator 
   if set -q SSH_TTY
-    echo $redssh:// $cyan (whoami) $blue @(hostname) $cwd $git_info $normal ' '
+    echo $red ssh:// $cyan (whoami) $blue @(hostname) $cwd $git_info $normal ' '
   else
     echo $cyan(whoami) $blue $cwd $git_info $normal ' '
   end
