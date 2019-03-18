@@ -57,9 +57,9 @@ function fish_prompt
 
   echo -n -s $status_indicator 
   if set -q SSH_TTY
-    echo (whoami)@(hostname) $cwd $git_info $normal ' '
+    echo $redssh://$cyan(whoami)$blue@(hostname) $cwd $git_info $normal ' '
   else
-    echo (whoami) $cwd $git_info $normal ' '
+    echo $cyan(whoami) $blue $cwd $git_info $normal ' '
   end
   # echo # To print an empty line
   # prompt character
