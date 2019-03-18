@@ -56,10 +56,10 @@ function fish_prompt
   end
 
   echo -n -s $status_indicator 
-  if [ -n "SSH_TTY" -o -n "$SSH_CLIENT" ]
-    echo (whoami) $cwd $git_info $normal ' '
-  else
+  if set -q SSH_TTY
     echo (whoami)@(hostname) $cwd $git_info $normal ' '
+  else
+    echo (whoami) $cwd $git_info $normal ' '
   end
   # echo # To print an empty line
   # prompt character
