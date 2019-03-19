@@ -38,7 +38,7 @@ function fish_prompt
 
     if test $branch_name = 'master'
       set -l git_branch "master"
-      set git_info \n"$normal $cyan(♆ $red$git_branch)$normal"
+      set git_info \n"$normal $cyan(♆ $red$git_branch$cyan)$normal"
     else
       set -l git_branch $branch_name
       set git_info \n"$normal $cyan(♆ $git_branch)$normal"
