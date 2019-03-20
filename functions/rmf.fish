@@ -1,4 +1,4 @@
-# Defined in - @ line 0
+# Defined in - @ line 1
 function rmf --description 'alias rmf=rm -rf'
 	rm -rf $argv;
 end
