@@ -23,8 +23,8 @@ function __goto_usage
 end
 
 function __goto_get_db
-    if test -f "$GOTO_DB"
-        echo "$GOTO_DB"
+    if test -f "$HOME/.goto"
+        echo "$HOME/.goto"
     else if test -d "$XDG_DATA_HOME"
         mkdir -p "$XDG_DATA_HOME/goto"
         touch -a "$XDG_DATA_HOME/goto/db"
