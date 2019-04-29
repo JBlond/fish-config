@@ -55,6 +55,7 @@ alias gsu="git submodule update --recursive --remote"
 alias hibernate="rundll32.exe powrprof.dll,SetSuspendState"
 
 alias vagrant="vagrant --color"
+alias vm="vagrant ssh"
 
 alias composer='composer --ansi'
 
