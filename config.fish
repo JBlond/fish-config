@@ -1,3 +1,5 @@
+set -g fish_prompt_pwd_dir_length 30
+
 # Enable aliases to be sudo’ed
 alias sudo='sudo '
 
@@ -93,7 +95,7 @@ alias vless='/usr/share/vim/vim8*/macros/less.sh'
 alias :q="exit"
 
 alias ipt='sudo /sbin/iptables'
- 
+
 # display all rules #
 alias iptlist='sudo /sbin/iptables -L -n -v --line-numbers'
 alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
